@@ -2,26 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.MuiInputBase-colorPrimary,
+.MuiInputLabel-root {
+  color: #3a719b;
+  font-family: "Montserrat", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.MuiInput-root::before,
+.MuiInput-root:hover:before {
+  border-bottom-color: #3a719b !important; /* override MUI color */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.MuiInputLabel-asterisk {
+  color: #f37021;
+}
+
+/* hide native placeholder text from date input */
+input[type="date"][value=""]:not(:focus) {
+  color: transparent;
 }

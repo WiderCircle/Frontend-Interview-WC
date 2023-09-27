@@ -4,8 +4,7 @@
 
 Build the Patient Referral Form using this [design spec](https://www.figma.com/file/XIHFNbIXykq8KosWEIryhoRJ/Patient-Referral-Form-interview?node-id=0%3A1).
 
-There is no need to build any backend (API layer, server, database). For individual form, created you should store those in some state management library instead of a React State i.e., Redux, Recoil, Rematch. For the inputs of each individual store you can store that in a react state. For simulating form submission, you can do a POST to /api/referrals
-
+There is no need to build any backend (API layer, server, database). For individual form, created you should store those in some state management library instead of a React State i.e., Redux, Recoil, Rematch. For the inputs of each individual store you can store that in a react state. You can simulate the address input or ignore it. For simulating form submission, you can do a POST to /api/referrals. 
 
 ## Duration
 

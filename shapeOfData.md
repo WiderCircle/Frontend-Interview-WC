@@ -9,8 +9,7 @@
             month: number,
             day: number,
         },
-        address1: string, // line 1. eg. 123 fake street
-        address2: string, // line 2. eg. suite 500
+        address1: string,
         city: string,
         state: string,
         zipcode: string,
@@ -20,7 +19,8 @@
             active: bool,
             type: string, // eg. email, sms, voice, fax
             value: string
-        }]
+        }],
+        notes: string
      }
 }
 ```

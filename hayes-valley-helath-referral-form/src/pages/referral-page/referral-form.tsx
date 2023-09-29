@@ -9,7 +9,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WcInput from '../../app/custom-components/wc-input';
-import { IconButton, IconButtonProps, styled } from '@mui/material';
+import { Box, IconButton, IconButtonProps, styled } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 
 interface ReferralFormProps {
@@ -40,30 +40,32 @@ function ReferralForm({ index, expanded, showUtilityButtons = false, onExpandCli
     return (
         <form style={{ backgroundColor: '#fff', marginTop: '10px' }}>
             <header>
-                <Grid container alignItems="center">
-                    <Grid item xs={0.75}>
+                <Box display="flex" alignItems="center">
+                    <Box width={50} textAlign="center">
                         <Typography variant="h4" style={{ backgroundColor: 'green', color: '#fff', paddingTop: '25px', paddingBottom: '25px' }}>{index + 1}</Typography>
-                    </Grid>
-                    <Grid item xs={10} style={{ textAlign: 'left', paddingLeft: '10px' }}>
-                        <Typography variant="h5"> New Referral </Typography>
-                    </Grid>
-                    {showUtilityButtons &&
-                        <Grid item xs={0.75} style={{ display: 'flex' }}>
-                            <IconButton
-                                onClick={onDeleteClick}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <ExpandMore
-                                expand={expanded}
-                                onClick={onExpandClick} // Use the provided callback
-                                aria-expanded={expanded}
-                                aria-label="show more"
-                            >
-                                <ExpandMoreIcon />
-                            </ExpandMore>
-                        </Grid>
-                    }
-                </Grid>
+                    </Box>
+                    <Box flex={1} textAlign="left">
+                        <Typography variant="h5" style={{ paddingLeft: '10px' }}>New Referral</Typography>
+                    </Box>
+                    <Box width={100}>
+                        {showUtilityButtons &&
+                            <>
+                                <IconButton
+                                    onClick={onDeleteClick}>
+                                    <DeleteIcon />
+                                </IconButton>
+                                <ExpandMore
+                                    expand={expanded}
+                                    onClick={onExpandClick} // Use the provided callback
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
+                                >
+                                    <ExpandMoreIcon />
+                                </ExpandMore>
+                            </>
+                        }
+                    </Box>
+                </Box>
             </header>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Grid container>

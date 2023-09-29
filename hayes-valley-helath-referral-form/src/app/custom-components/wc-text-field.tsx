@@ -1,28 +1,31 @@
+
+
 import React from 'react';
-import { BaseTextFieldProps, Box, FormControl, InputAdornment, InputLabel, SvgIconProps, TextField, TextFieldProps } from '@mui/material';
-import { AccountCircle, BorderColor } from '@mui/icons-material';
+import { Box, TextField, InputAdornment, SvgIconProps, BaseTextFieldProps } from '@mui/material';
 
 interface CustomInputProps extends BaseTextFieldProps {
     Icon?: React.ComponentType<SvgIconProps>;
     placeholder: string;
 }
 
-function WcTextField({ Icon, required, placeholder, ...TextFieldProps }: CustomInputProps) {
-    const placeholderText = (required ? `${placeholder}*` : placeholder)
+const WcTextField: React.FC<CustomInputProps> = ({ Icon, required, placeholder, fullWidth, ...TextFieldProps }) => {
+    const placeholderText = required ? `${placeholder}*` : placeholder;
 
-    return (<>
+    const textFieldStyles = {
+        color: '#3A719B',
+        '& ::placeholder': {
+            color: '#3A719B',
+            fontWeight: 200,
+        },
+    };
+
+    return (
         <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #142B58' }}>
             <TextField
-                fullWidth
+                fullWidth={fullWidth}
                 variant="standard"
-                required
-                sx={{
-                    color: '#3A719B',
-                    '& ::placeholder': {
-                        color: '#3A719B',
-                        fontWeight: 200
-                    }
-                }}
+                required={required}
+                sx={textFieldStyles}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -30,13 +33,12 @@ function WcTextField({ Icon, required, placeholder, ...TextFieldProps }: CustomI
                         </InputAdornment>
                     ),
                     disableUnderline: true,
-                    placeholder: placeholderText
+                    placeholder: placeholderText,
                 }}
                 {...TextFieldProps}
             />
         </Box>
-    </>
     );
-}
+};
 
 export default WcTextField;

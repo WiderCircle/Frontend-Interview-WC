@@ -71,7 +71,7 @@ function ReferralForm({ index, expanded, showUtilityButtons = false, onExpandCli
                 <Grid container>
                     <Grid item xs={0.5}></Grid>
                     <Grid item xs={11}>
-                        <Grid container spacing={2} style={{ padding: "30px" }}>
+                        <Grid container spacing={4} p="30px" >
                             <Grid item xs={6} >
                                 <WcInput
                                     placeholder="First Name"

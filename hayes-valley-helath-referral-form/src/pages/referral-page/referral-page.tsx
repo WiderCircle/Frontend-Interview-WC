@@ -1,7 +1,5 @@
-'use client'
-
 import React, { useState } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import ReferralForm from './referral-form';
 import Button from '@mui/material/Button';
 
@@ -29,46 +27,50 @@ export default function ReferralPage() {
 
     const handleFormDeleteClick = (indexToRemove: number) => {
         if (referralForms.length <= 1)
-            return;//the delete button shouldn't be shown anyway.
+            return;//the delete button shouldn't be shown anyway, but just in case!
         const updatedForms = referralForms.filter((form, index) => (index != indexToRemove));
         setReferralForms(updatedForms);
     }
 
-    return (
-        <Grid container spacing={0}>
-            <Grid item xs={12} style={{ backgroundColor: '#fff' }}>
-                <Container style={{ textAlign: 'center' }}>
-                    <header>
-                        <Typography variant="h1">Patient Referral Form</Typography>
-                        <Typography variant="h2">Hayes Valley Health San Francisco</Typography>
-                    </header>
-                </Container>
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: 'center' }}>
-                <Container maxWidth="md" style={{ textAlign: 'center' }}>
-                    <main>
-                        <Typography variant="h3">Referral Patients</Typography>
-                        <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
-                        {referralForms.map((form, index) => (
-                            <div key={form.key}>
-                                <ReferralForm
-                                    index={index}
-                                    showUtilityButtons={referralForms.length > 1}
-                                    expanded={form.expanded}
-                                    onExpandClick={() => handleFormExpandClick(index)}
-                                    onDeleteClick={() => handleFormDeleteClick(index)}
-                                />
-                            </div>
-                        ))}
+    return (<>
+        <header>
+            <Box display={'flex'} alignItems={'center'} py={'58px'} style={{ backgroundColor: '#fff' }}>
+                <Box width={"100%"}>
+                    <Typography variant="h1">Patient Referral Form</Typography>
+                    <Typography variant="h2">Hayes Valley Health San Francisco</Typography>
+                </Box>
+            </Box >
+        </header>
+        <main>
+            <Container maxWidth="md">
+                <header style={{ padding: '20px' }}>
+                    <Typography variant="h3">Referral Patients</Typography>
+                    <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
+                </header>
+                <main>
+                    {referralForms.map((form, index) => (
+                        <div key={form.key}>
+                            <ReferralForm
+                                index={index}
+                                showUtilityButtons={referralForms.length > 1}
+                                expanded={form.expanded}
+                                onExpandClick={() => handleFormExpandClick(index)}
+                                onDeleteClick={() => handleFormDeleteClick(index)}
+                            />
+                        </div>
+                    ))}
+                </main>
+                <footer>
+                    <Box mb={4} mt={1} textAlign={'center'}>
                         <Button variant="text" onClick={addReferralForm}>
                             + Add another patient
                         </Button>
-                        <Button variant="contained" style={{ display: 'block', width: '100%' }}>
-                            Send Referrals
-                        </Button>
-                    </main>
-                </Container>
-            </Grid>
-        </Grid>
-    );
+                    </Box>
+                    <Button variant="contained" style={{ display: 'block', width: '100%' }}>
+                        Send Referrals
+                    </Button>
+                </footer>
+            </Container>
+        </main>
+    </>);
 }

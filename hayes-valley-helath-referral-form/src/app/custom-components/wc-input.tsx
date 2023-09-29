@@ -1,6 +1,7 @@
 import React from 'react';
 import Input, { InputProps } from '@mui/material/Input';
-import { SvgIconProps } from '@mui/material';
+import { Box, FormControl, InputAdornment, InputLabel, SvgIconProps, TextField } from '@mui/material';
+import { AccountCircle, BorderColor } from '@mui/icons-material';
 
 interface CustomInputProps extends InputProps {
     Icon?: React.ComponentType<SvgIconProps>;
@@ -16,15 +17,26 @@ interface CustomInputProps extends InputProps {
  * @param {string} placeholder - The placeholder text for the input.
  */
 function WcInput({ Icon, required, placeholder, ...inputProps }: CustomInputProps) {
-    const placeholderText = required ? `${placeholder} *` : placeholder;
+    const placeholderText = (required ? `${placeholder}*` : placeholder);
 
-    return (
-        <Input
-            fullWidth
-            startAdornment={Icon && <Icon fontSize="small" style={{ marginRight: '8px' }} />}
-            placeholder={placeholderText}
-            {...inputProps}
-        />
+    return (<>
+        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #142B58' }}>
+            <Input
+                fullWidth
+                placeholder={placeholderText}
+                required
+                disableUnderline
+                startAdornment={Icon && <Icon style={{ color: '#B8C7CC' }} />}
+                sx={{
+                    color: '#3A719B',
+                    '& ::placeholder': {
+                        color: '#3A719B',
+                        fontWeight: 200
+                    }
+                }}
+            />
+        </Box>
+    </>
     );
 }
 

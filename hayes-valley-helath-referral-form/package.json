@@ -17,12 +17,14 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-places-autocomplete": "^7.3.0",
     "react-redux": "^8.1.2"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/react-places-autocomplete": "^7.2.10",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "typescript": "latest"

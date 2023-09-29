@@ -8,9 +8,10 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import WcInput from '../../app/custom-components/wc-input';
+import WcTextField from '../../app/custom-components/wc-text-field';
 import { Box, IconButton, IconButtonProps, styled } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
+import WcAddressInput from '@/app/custom-components/wc-address-input';
 
 interface ReferralFormProps {
     index: number;
@@ -58,7 +59,7 @@ function ReferralForm({ index, expanded, showUtilityButtons = false, onExpandCli
                                     expand={expanded}
                                     onClick={onExpandClick} // Use the provided callback
                                     aria-expanded={expanded}
-                                    aria-label="show more"
+                                    aria-placeholder="show more"
                                 >
                                     <ExpandMoreIcon />
                                 </ExpandMore>
@@ -73,55 +74,55 @@ function ReferralForm({ index, expanded, showUtilityButtons = false, onExpandCli
                     <Grid item xs={11}>
                         <Grid container spacing={4} p="30px" >
                             <Grid item xs={6} >
-                                <WcInput
+                                <WcTextField
                                     placeholder="First Name"
                                     required
                                     Icon={PersonIcon}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Last Name"
                                     required
                                     Icon={PersonIcon}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Date of Birth"
                                     required
                                     Icon={CakeIcon}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Contact Language"
                                     required
                                     Icon={LanguageIcon}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Phone"
                                     required
                                     Icon={PhoneIcon}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Email"
                                     required
                                     Icon={EmailIcon}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <WcInput
-                                    placeholder="Address"
-                                    required
+                                <WcAddressInput
+                                // placeholder="Address"
+                                // required
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <WcInput
+                                <WcTextField
                                     placeholder="Notes/Reason"
                                 />
                             </Grid>

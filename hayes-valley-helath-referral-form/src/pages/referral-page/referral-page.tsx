@@ -20,7 +20,7 @@ export default function ReferralPage() {
                 </Container>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center" }}>
-                <Container maxWidth="sm" style={{ textAlign: "center" }}>
+                <Container maxWidth="md" style={{ textAlign: "center" }}>
                     <main>
                         <Typography variant="h3">Referral Patients</Typography>
                         <Typography variant="subtitle1">You can add up to five patients at a time</Typography>

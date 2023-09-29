@@ -29,6 +29,9 @@ export default function ReferralPage() {
         if (referralForms.length <= 1)
             return;//the delete button shouldn't be shown anyway, but just in case!
         const updatedForms = referralForms.filter((form, index) => (index != indexToRemove));
+        if (updatedForms.length === 1)
+            updatedForms[0].expanded = true;
+
         setReferralForms(updatedForms);
     }
 

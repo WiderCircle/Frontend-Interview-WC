@@ -14,9 +14,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0-uLHPblmURzEuzZBN0CL_YWYRYu2Am8&libraries=places"></script>
-      </head>
       <body style={{ backgroundColor: "#CDE7ED" }}><CssBaseline />{children}</body>
     </html>
   )

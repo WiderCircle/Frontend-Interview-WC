@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import WcTextField from './wc-text-field';
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
+import { Wrapper } from '@googlemaps/react-wrapper';
+import { config } from '../config';
 
 interface PlacesAutocompleteComponentProps { }
 
@@ -48,42 +50,44 @@ const PlacesAutocompleteComponent: React.FC<PlacesAutocompleteComponentProps> = 
     };
 
     return (
-        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <div>
-                    <WcTextField
-                        {...getInputProps({
-                            placeholder: 'Address',
-                            className: 'location-search-input',
-                            autoComplete: 'new-password',
-                        })}
-                    />
-                    <Box sx={styles.container}>
-                        {(loading || suggestions.length > 0) && (
-                            <List className="autocomplete-dropdown-container" sx={styles.dropdownContainer}>
-                                {loading && <ListItem>Loading...</ListItem>}
-                                {suggestions.map((suggestion, index) => {
-                                    const className = suggestion.active ? 'suggestion-item active' : 'suggestion-item';
+        <Wrapper apiKey={config.googleMapsApiKey} libraries={["places"]}>
+            <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                        <WcTextField
+                            {...getInputProps({
+                                placeholder: 'Address',
+                                className: 'location-search-input',
+                                autoComplete: 'new-password',
+                            })}
+                        />
+                        <Box sx={styles.container}>
+                            {(loading || suggestions.length > 0) && (
+                                <List className="autocomplete-dropdown-container" sx={styles.dropdownContainer}>
+                                    {loading && <ListItem>Loading...</ListItem>}
+                                    {suggestions.map((suggestion, index) => {
+                                        const className = suggestion.active ? 'suggestion-item active' : 'suggestion-item';
 
-                                    return (
-                                        <ListItemButton
-                                            sx={styles.listItem}
-                                            {...getSuggestionItemProps(suggestion, {
-                                                className,
-                                                tabIndex: 0, // Add tabindex to enable focus
-                                            })}
-                                            key={index}
-                                        >
-                                            {suggestion.description}
-                                        </ListItemButton>
-                                    );
-                                })}
-                            </List>
-                        )}
-                    </Box>
-                </div>
-            )}
-        </PlacesAutocomplete>
+                                        return (
+                                            <ListItemButton
+                                                sx={styles.listItem}
+                                                {...getSuggestionItemProps(suggestion, {
+                                                    className,
+                                                    tabIndex: 0, // Add tabindex to enable focus
+                                                })}
+                                                key={index}
+                                            >
+                                                {suggestion.description}
+                                            </ListItemButton>
+                                        );
+                                    })}
+                                </List>
+                            )}
+                        </Box>
+                    </div>
+                )}
+            </PlacesAutocomplete>
+        </Wrapper>
     );
 };
 

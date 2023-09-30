@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 import WcTextField from './wc-text-field';
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { config } from '../config';
 
 interface WcAddressInputProps {
-    setAddress: (newValue: string) => void;
+    onChange: (newValue: string) => void;
+    onAddressSelect: (addressInfo: AddressInfo) => void;
     address: string;
+}
+
+export interface AddressInfo {
+    address?: string,
+    city?: string,
+    state?: string,
+    zip?: number | string,
+    country?: string,
 }
 
 const styles = {
@@ -30,24 +39,21 @@ const styles = {
     },
 };
 
-const WcAddressInput: React.FC<WcAddressInputProps> = ({ setAddress, address }) => {
+const WcAddressInput: React.FC<WcAddressInputProps> = ({ onAddressSelect, onChange, address }) => {
     const handleChange = (newAddress: string) => {
-        setAddress(newAddress);
+        onChange(newAddress);
     };
 
-    const handleSelect = (selectedAddress: string) => {
-        setAddress(selectedAddress);
-
-        // You can perform additional actions when an address is selected,
-        // such as geocoding or storing the coordinates.
-        geocodeByAddress(selectedAddress)
-            .then((results) => getLatLng(results[0]))
-            .then((latLng) => {
-                console.log('Coordinates:', latLng);
-            })
-            .catch((error) => {
-                console.error('Geocoding Error', error);
-            });
+    const handleSelect = async (address: string, placeId: any) => {
+        const [place] = await geocodeByPlaceId(placeId);
+        const addressInfo: AddressInfo = {
+            address: place.formatted_address,
+            city: place.address_components.find(c => c.types.includes('locality'))?.long_name,
+            state: place.address_components.find(c => c.types.includes('administrative_area_level_1'))?.long_name,
+            zip: place.address_components.find(c => c.types.includes('postal_code'))?.long_name,
+            country: place.address_components.find(c => c.types.includes('country'))?.long_name,
+        }
+        onAddressSelect(addressInfo);
     };
 
     return (

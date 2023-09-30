@@ -2,38 +2,43 @@ import React, { useState } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import ReferralForm from './referral-form';
 import Button from '@mui/material/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import { formCollapseAll, formAdded, formRemoved, formExpandLast, formToggleExpand } from './referralFormsSlice';
+
 
 export default function ReferralPage() {
-    const maxReferralForms = 5;
-    const [referralForms, setReferralForms] = useState([{ key: 1, expanded: true }]);
+    const maxReferralForms = 5;//@todo extract to config
+    const referralForms = useSelector((state: RootState) => state.referralForms);
 
-    const addReferralForm = () => {
-        if (referralForms.length < maxReferralForms) {
-            const updatedForms = referralForms.map((form) => {
-                form.expanded = false
-                return form;
-            });
-            updatedForms.push({ key: referralForms.length + 1, expanded: true });
-            setReferralForms(updatedForms);
-        }
+    const dispatch = useDispatch();
+
+    const handleAddFormClicked = () => {
+        if (referralForms.length >= maxReferralForms)
+            return;
+        dispatch(
+            formCollapseAll()
+        );
+        dispatch(
+            formAdded({ expanded: true })
+        );
+        return;
     };
 
-    const handleFormExpandClick = (index: number) => {
-        const updatedForms = [...referralForms];
-        updatedForms[index].expanded = !updatedForms[index].expanded;
-        const updatedFormsNew = [...updatedForms];
-        setReferralForms(updatedFormsNew);
+    const handleFormExpandClick = (key: number) => {
+        dispatch(
+            formToggleExpand({ key: key })
+        )
     };
 
-    const handleFormDeleteClick = (indexToRemove: number) => {
-        if (referralForms.length <= 1)
-            return;//the delete button shouldn't be shown anyway, but just in case!
-        const updatedForms = referralForms.filter((form, index) => (index != indexToRemove));
-        if (updatedForms.length === 1)
-            updatedForms[0].expanded = true;
-
-        setReferralForms(updatedForms);
-    }
+    const handleFormDeleteClick = (keyToRemove: number) => {
+        dispatch(
+            formRemoved({ key: keyToRemove })
+        );
+        dispatch(
+            formExpandLast()
+        );
+    };
 
     return (<>
         <header>
@@ -51,21 +56,21 @@ export default function ReferralPage() {
                     <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
                 </header>
                 <main>
-                    {referralForms.map((form, index) => (
-                        <div key={form.key}>
+                    {referralForms.map((formState, index) => (
+                        <div key={formState.key}>
                             <ReferralForm
-                                index={index}
+                                formState={formState}
+                                displayIndex={index + 1}
                                 showUtilityButtons={referralForms.length > 1}
-                                expanded={form.expanded}
-                                onExpandClick={() => handleFormExpandClick(index)}
-                                onDeleteClick={() => handleFormDeleteClick(index)}
+                                onExpandClick={() => handleFormExpandClick(formState.key)}
+                                onDeleteClick={() => handleFormDeleteClick(formState.key)}
                             />
                         </div>
                     ))}
                 </main>
                 <footer>
                     <Box mb={4} mt={1} textAlign={'center'}>
-                        <Button variant="text" onClick={addReferralForm}>
+                        <Button variant="text" onClick={handleAddFormClicked}>
                             + Add another patient
                         </Button>
                     </Box>

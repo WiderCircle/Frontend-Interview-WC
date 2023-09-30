@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Box,
     Collapse,
@@ -18,11 +18,13 @@ import {
     Phone,
 } from '@mui/icons-material';
 import WcTextField from '../../custom-components/wc-text-field';
-import WcAddressInput from '@/app/custom-components/wc-address-input';
+import WcAddressInput, { AddressInfo } from '@/app/custom-components/wc-address-input';
+import { formData, formState, formUpdated } from './referralFormsSlice';
+import { useDispatch } from 'react-redux';
 
 interface ReferralFormProps {
-    index: number;
-    expanded: boolean;
+    formState: formState;
+    displayIndex: number;
     showUtilityButtons?: boolean;
     onExpandClick: () => void;
     onDeleteClick: () => void;
@@ -44,20 +46,65 @@ const ExpandMoreStyled = styled((props: ExpandMoreProps) => {
 }));
 
 function ReferralForm({
-    index,
-    expanded,
+    formState,
+    displayIndex,
     showUtilityButtons = false,
     onExpandClick,
     onDeleteClick,
 }: ReferralFormProps) {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [contactLanguage, setContactLanguage] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
-    const [notes, setNotes] = useState('');
+    const { key, expanded, formData } = formState;
+    const { firstname, lastname, dateOfBirth, address1: address, language, notes } = formData;
+    const phone = formData.contacts.find((contactMethod) => contactMethod.active && contactMethod.type === 'phone');
+    const email = formData.contacts.find((contactMethod) => contactMethod.active && contactMethod.type === 'email');
+
+    const dispatch = useDispatch();
+
+    const handleFormUpdate = (key: keyof formData, value: string) => {
+        const { ...newFormState } = formState;
+        newFormState.formData = {
+            ...formState.formData,
+            [key]: value,
+        }
+        dispatch(
+            formUpdated(newFormState)
+        );
+    };
+    const handleAddressUpdate = (addressInfo: AddressInfo) => {
+        const { ...newFormState } = formState;
+        newFormState.formData = {
+            ...formState.formData,
+            address1: addressInfo.address || '',
+            city: addressInfo.city || '',
+            state: addressInfo.state || '',
+            zipcode: addressInfo.zip || '',
+            country: addressInfo.country || '',
+        }
+        dispatch(
+            formUpdated(newFormState)
+        );
+    }
+    const handleContactUpdate = (contactMethodType: 'phone' | 'email', value: string) => {
+        const updatedContactMethod = {
+            active: true,
+            type: contactMethodType,
+            value: value
+        };
+        const existingContacts = [
+            ...formState.formData.contacts.filter((contactMethod) => contactMethod.type !== contactMethodType),
+            updatedContactMethod
+        ];
+
+        const newFormState = {
+            ...formState,
+            formData: {
+                ...formState.formData,
+                contacts: existingContacts,
+            },
+        };
+        dispatch(
+            formUpdated(newFormState)
+        );
+    }
 
     return (
         <form style={{ backgroundColor: '#fff', marginTop: '10px' }}>
@@ -73,12 +120,12 @@ function ReferralForm({
                                 paddingBottom: '25px',
                             }}
                         >
-                            {index + 1}
+                            {displayIndex}
                         </Typography>
                     </Box>
                     <Box flex={1} textAlign="left">
                         <Typography variant="h5" sx={{ paddingLeft: '10px' }}>
-                            New Referral
+                            New Referral {formState.key}
                         </Typography>
                     </Box>
                     <Box width={100}>
@@ -110,8 +157,8 @@ function ReferralForm({
                                     placeholder="First Name"
                                     required
                                     Icon={AccountCircle}
-                                    onChange={(event) => { setFirstName(event.target.value); }}
-                                    value={firstName}
+                                    onChange={(e) => handleFormUpdate('firstname', e.target.value)}
+                                    value={firstname}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -119,8 +166,8 @@ function ReferralForm({
                                     placeholder="Last Name"
                                     required
                                     Icon={AccountCircle}
-                                    onChange={(event) => { setLastName(event.target.value); }}
-                                    value={lastName}
+                                    onChange={(e) => handleFormUpdate('lastname', e.target.value)}
+                                    value={lastname}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -128,7 +175,7 @@ function ReferralForm({
                                     placeholder="Date of Birth"
                                     required
                                     Icon={Cake}
-                                    onChange={(event) => { setDateOfBirth(event.target.value); }}
+                                    onChange={(e) => handleFormUpdate('dateOfBirth', e.target.value)}
                                     value={dateOfBirth}
                                 />
                             </Grid>
@@ -137,8 +184,8 @@ function ReferralForm({
                                     placeholder="Contact Language"
                                     required
                                     Icon={Language}
-                                    onChange={(event) => { setContactLanguage(event.target.value); }}
-                                    value={contactLanguage}
+                                    onChange={(e) => handleFormUpdate('language', e.target.value)}
+                                    value={language}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -146,8 +193,8 @@ function ReferralForm({
                                     placeholder="Phone"
                                     required
                                     Icon={Phone}
-                                    onChange={(event) => { setPhone(event.target.value); }}
-                                    value={phone}
+                                    onChange={(e) => handleContactUpdate('phone', e.target.value)}
+                                    value={phone?.value}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -155,24 +202,29 @@ function ReferralForm({
                                     placeholder="Email"
                                     required
                                     Icon={Email}
-                                    onChange={(event) => { setEmail(event.target.value); }}
-                                    value={email}
+                                    onChange={(e) => handleContactUpdate('email', e.target.value)}
+                                    value={email?.value}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <WcAddressInput
                                     address={address}
-                                    setAddress={setAddress}
+                                    onChange={(newValue: string) => handleFormUpdate('address1', newValue)}
+                                    onAddressSelect={(addressInfo: AddressInfo) => handleAddressUpdate(addressInfo)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <WcTextField placeholder="Notes/Reason" />
+                                <WcTextField
+                                    placeholder="Notes/Reason"
+                                    value={notes}
+                                    onChange={(e) => handleFormUpdate('notes', e.target.value)}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Collapse>
-        </form>
+        </form >
     );
 }
 

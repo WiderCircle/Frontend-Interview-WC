@@ -5,6 +5,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import "@fontsource/montserrat/500.css";
 import { red } from '@mui/material/colors';
+import { Provider } from 'react-redux';
+import store from './store';
 
 
 const theme = createTheme({
@@ -65,8 +67,10 @@ const theme = createTheme({
 
 export default function Home() {
   return (
-    <ThemeProvider theme={theme}>
-      <ReferralPage />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ReferralPage />
+      </ThemeProvider>
+    </Provider>
   )
 }

@@ -128,7 +128,7 @@ function ReferralForm({
                         </Box>
                         <Box flex={1} textAlign="left">
                             <Typography variant="h5" sx={{ paddingLeft: '10px' }}>
-                                New Referral {formState.key}
+                                {formData.firstname || formData.lastname ? `${formData.firstname} ${formData.lastname}` : `New Referral`}
                             </Typography>
                         </Box>
                         <Box width={100}>

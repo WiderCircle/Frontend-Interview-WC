@@ -19,7 +19,7 @@ import {
 } from '@mui/icons-material';
 import WcTextField from '../../custom-components/wc-text-field';
 import WcAddressInput, { AddressInfo } from '@/app/custom-components/wc-address-input';
-import { formData, formState, formUpdated } from './referralFormsSlice';
+import { referralFormData, formState, formUpdated } from './referralFormsSlice';
 import { useDispatch } from 'react-redux';
 
 interface ReferralFormProps {
@@ -59,7 +59,7 @@ function ReferralForm({
 
     const dispatch = useDispatch();
 
-    const handleFormUpdate = (key: keyof formData, value: string) => {
+    const handleFormUpdate = (key: keyof referralFormData, value: string) => {
         const { ...newFormState } = formState;
         newFormState.formData = {
             ...formState.formData,

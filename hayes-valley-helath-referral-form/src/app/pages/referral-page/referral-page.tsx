@@ -5,16 +5,18 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { formCollapseAll, formAdded, formRemoved, formExpandLast, formToggleExpand } from './referralFormsSlice';
+import useReferralApi from './useReferralApi';
 
 
 export default function ReferralPage() {
     const maxReferralForms = 5;//@todo extract to config
-    const referralForms = useSelector((state: RootState) => state.referralForms);
+    const referralFormsState = useSelector((state: RootState) => state.referralForms);
+    const { sendReferrals, loading, error } = useReferralApi();
 
     const dispatch = useDispatch();
 
     const handleAddFormClicked = () => {
-        if (referralForms.length >= maxReferralForms)
+        if (referralFormsState.length >= maxReferralForms)
             return;
         dispatch(
             formCollapseAll()
@@ -40,6 +42,13 @@ export default function ReferralPage() {
         );
     };
 
+    const handleFormSubmission = () => {
+        const referralForms = referralFormsState.map((referralFormState) => {
+            return referralFormState.formData;
+        });
+        sendReferrals(referralForms);
+    }
+
     return (<>
         <header>
             <Box display={'flex'} alignItems={'center'} py={'58px'} style={{ backgroundColor: '#fff' }}>
@@ -56,12 +65,12 @@ export default function ReferralPage() {
                     <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
                 </header>
                 <main>
-                    {referralForms.map((formState, index) => (
+                    {referralFormsState.map((formState, index) => (
                         <div key={formState.key}>
                             <ReferralForm
                                 formState={formState}
                                 displayIndex={index + 1}
-                                showUtilityButtons={referralForms.length > 1}
+                                showUtilityButtons={referralFormsState.length > 1}
                                 onExpandClick={() => handleFormExpandClick(formState.key)}
                                 onDeleteClick={() => handleFormDeleteClick(formState.key)}
                             />
@@ -74,7 +83,7 @@ export default function ReferralPage() {
                             + Add another patient
                         </Button>
                     </Box>
-                    <Button variant="contained" style={{ display: 'block', width: '100%' }}>
+                    <Button variant="contained" onClick={handleFormSubmission} style={{ display: 'block', width: '100%' }}>
                         Send Referrals
                     </Button>
                 </footer>

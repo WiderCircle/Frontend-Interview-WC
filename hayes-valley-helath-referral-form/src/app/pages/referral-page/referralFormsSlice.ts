@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface formData {
+export interface referralFormData {
     firstname: string;
     lastname: string;
     dateOfBirth: string;
@@ -27,10 +27,10 @@ export interface formData {
 export interface formState {
     key: number;
     expanded: boolean;
-    formData: formData;
+    formData: referralFormData;
 
 }
-const initialFormData: formData = {
+const initialFormData: referralFormData = {
     firstname: '',
     lastname: '',
     dateOfBirth: '',

@@ -11,8 +11,8 @@ interface CustomInputProps extends StandardTextFieldProps {
 const WcTextField: React.FC<CustomInputProps> = ({ Icon, required, placeholder, fullWidth = true, ...TextFieldProps }) => {
     const placeholderText = required ? `${placeholder}*` : placeholder;
 
-    const textFieldStyles = {
-        color: '#3A719B',
+    const inputStyles = {
+        color: '#0B2B5B',
         '& ::placeholder': {
             color: '#3A719B',
             fontWeight: 200,
@@ -20,13 +20,13 @@ const WcTextField: React.FC<CustomInputProps> = ({ Icon, required, placeholder, 
     };
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #142B58' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #3A719B' }}>
             <TextField
                 fullWidth={fullWidth}
                 variant="standard"
                 required={required}
-                sx={textFieldStyles}
                 InputProps={{
+                    sx: inputStyles,
                     startAdornment: (
                         <InputAdornment position="start">
                             {Icon && <Icon style={{ color: '#B8C7CC' }} />}

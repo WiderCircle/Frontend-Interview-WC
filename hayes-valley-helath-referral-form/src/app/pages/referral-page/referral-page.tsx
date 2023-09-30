@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Alert, Box, Container, Grid, Typography } from '@mui/material';
 import ReferralForm from './referral-form';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { formCollapseAll, formAdded, formRemoved, formExpandLast, formToggleExpand } from './referralFormsSlice';
 import useReferralApi from './useReferralApi';
+import WcAlert from '@/app/custom-components/wc-alert';
+import { config } from '../../config';
 
 
 export default function ReferralPage() {
-    const maxReferralForms = 5;//@todo extract to config
     const referralFormsState = useSelector((state: RootState) => state.referralForms);
-    const { sendReferrals, loading, error } = useReferralApi();
+
+    const { sendReferrals, messageContent, messageType, loading } = useReferralApi();
 
     const dispatch = useDispatch();
 
     const handleAddFormClicked = () => {
-        if (referralFormsState.length >= maxReferralForms)
+        if (referralFormsState.length >= config.maxReferrals)
             return;
         dispatch(
             formCollapseAll()
@@ -47,7 +49,7 @@ export default function ReferralPage() {
             return referralFormState.formData;
         });
         sendReferrals(referralForms);
-    }
+    };
 
     return (<>
         <header>
@@ -60,7 +62,8 @@ export default function ReferralPage() {
         </header>
         <main>
             <Container maxWidth="md">
-                <header style={{ padding: '20px' }}>
+                <WcAlert type={messageType}>{messageContent}</WcAlert>
+                <header style={{ padding: '40px' }}>
                     <Typography variant="h3">Referral Patients</Typography>
                     <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
                 </header>
@@ -83,7 +86,7 @@ export default function ReferralPage() {
                             + Add another patient
                         </Button>
                     </Box>
-                    <Button variant="contained" onClick={handleFormSubmission} style={{ display: 'block', width: '100%' }}>
+                    <Button disabled={loading || false} variant="contained" onClick={handleFormSubmission} style={{ display: 'block', width: '100%' }}>
                         Send Referrals
                     </Button>
                 </footer>

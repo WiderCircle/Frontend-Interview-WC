@@ -5,21 +5,24 @@ import { referralFormData } from './referralFormsSlice';
 
 
 const useReferralApi = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [messageContent, setMessageContent] = useState('');
+    const [messageType, setMessageType] = useState<'hidden' | 'success' | 'error'>('hidden');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const sendReferrals = useCallback(
         async (referralForms: referralFormData[]) => {
-            setLoading(true);
-            setError(null);
+            setMessageType('hidden');
+            setMessageContent('');
 
             try {
                 const response = await axios.post('/api/referrals', referralForms);
-
+                setMessageType('success');
+                setMessageContent('');
                 console.log('Referral POST response:', response.data);
             } catch (error) {
                 console.error('Error sending referrals:', error);
-                setError('An error occurred while sending referrals.');
+                setMessageType('error');
+                setMessageContent('An error ocurred');
             } finally {
                 setLoading(false);
             }
@@ -27,7 +30,7 @@ const useReferralApi = () => {
         []
     );
 
-    return { sendReferrals, loading, error };
+    return { sendReferrals, messageContent, messageType, loading };
 };
 
 export default useReferralApi;

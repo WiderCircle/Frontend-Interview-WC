@@ -1,7 +1,7 @@
 import React from 'react';
-import PlacesAutocomplete, { geocodeByPlaceId } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByPlaceId, Suggestion } from 'react-places-autocomplete';
 import WcTextField from './WcTextField';
-import { Box, List, ListItem, ListItemButton } from '@mui/material';
+import { Box, List, ListItemButton } from '@mui/material';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { config } from '../config';
 
@@ -12,11 +12,11 @@ interface WcAddressInputProps {
 }
 
 export interface AddressInfo {
-    address?: string,
-    city?: string,
-    state?: string,
-    zip?: number | string,
-    country?: string,
+    address?: string;
+    city?: string;
+    state?: string;
+    zip?: number | string;
+    country?: string;
 }
 
 const styles = {
@@ -44,20 +44,20 @@ const WcAddressInput: React.FC<WcAddressInputProps> = ({ onAddressSelect, onChan
         onChange(newAddress);
     };
 
-    const handleSelect = async (address: string, placeId: any) => {
+    const handleSelect = async (selectedAddress: string, placeId: any) => {
         const [place] = await geocodeByPlaceId(placeId);
         const addressInfo: AddressInfo = {
             address: place.formatted_address,
-            city: place.address_components.find(c => c.types.includes('locality'))?.long_name,
-            state: place.address_components.find(c => c.types.includes('administrative_area_level_1'))?.long_name,
-            zip: place.address_components.find(c => c.types.includes('postal_code'))?.long_name,
-            country: place.address_components.find(c => c.types.includes('country'))?.long_name,
-        }
+            city: place.address_components.find(c => c.types.includes('locality'))?.long_name || '',
+            state: place.address_components.find(c => c.types.includes('administrative_area_level_1'))?.long_name || '',
+            zip: place.address_components.find(c => c.types.includes('postal_code'))?.long_name || '',
+            country: place.address_components.find(c => c.types.includes('country'))?.long_name || '',
+        };
         onAddressSelect(addressInfo);
     };
 
     return (
-        <Wrapper apiKey={config.googleMapsApiKey} libraries={["places"]}>
+        <Wrapper apiKey={config.googleMapsApiKey} libraries={['places']}>
             <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                     <div>
@@ -72,8 +72,8 @@ const WcAddressInput: React.FC<WcAddressInputProps> = ({ onAddressSelect, onChan
                         <Box sx={styles.container}>
                             {(loading || suggestions.length > 0) && (
                                 <List className="autocomplete-dropdown-container" sx={styles.dropdownContainer}>
-                                    {loading && <ListItem>Loading...</ListItem>}
-                                    {suggestions.map((suggestion, index) => {
+                                    {loading && <ListItemButton>Loading...</ListItemButton>}
+                                    {suggestions.map((suggestion: Suggestion, index: number) => {
                                         const className = suggestion.active ? 'suggestion-item active' : 'suggestion-item';
                                         return (
                                             <ListItemButton

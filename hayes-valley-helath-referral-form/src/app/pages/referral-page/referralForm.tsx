@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     Box,
-    Card,
     Collapse,
     Grid,
     IconButton,
@@ -20,12 +19,12 @@ import {
 } from '@mui/icons-material';
 import WcTextField from '../../custom-components/WcTextField';
 import WcAddressInput, { AddressInfo } from '@/app/custom-components/WcAddressInput';
-import { referralFormData, formState, formUpdated } from './referralFormsSlice';
 import { useDispatch } from 'react-redux';
 import { indicatorColors } from '@/app/page';
+import { FormState, formUpdated } from './referralFormsSlice';
 
 interface ReferralFormProps {
-    formState: formState;
+    formState: FormState;
     displayIndex: number;
     showUtilityButtons?: boolean;
     onExpandClick: () => void;
@@ -47,67 +46,56 @@ const ExpandMoreStyled = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-function ReferralForm({
+const ReferralForm: React.FC<ReferralFormProps> = ({
     formState,
     displayIndex,
     showUtilityButtons = false,
     onExpandClick,
     onDeleteClick,
-}: ReferralFormProps) {
-    const { key, expanded, formData } = formState;
+}) => {
+    const { expanded, formData } = formState;
     const { firstname, lastname, dateOfBirth, address1: address, language, notes } = formData;
     const phone = formData.contacts.find((contactMethod) => contactMethod.active && contactMethod.type === 'phone');
     const email = formData.contacts.find((contactMethod) => contactMethod.active && contactMethod.type === 'email');
 
     const dispatch = useDispatch();
 
-    const handleFormUpdate = (key: keyof referralFormData, value: string) => {
-        const { ...newFormState } = formState;
-        newFormState.formData = {
-            ...formState.formData,
+    const handleFormUpdate = (key: keyof typeof formData, value: string) => {
+        const newFormData = {
+            ...formData,
             [key]: value,
-        }
-        dispatch(
-            formUpdated(newFormState)
-        );
+        };
+        dispatch(formUpdated({ ...formState, formData: newFormData }));
     };
 
     const handleAddressUpdate = (addressInfo: AddressInfo) => {
-        const { ...newFormState } = formState;
-        newFormState.formData = {
-            ...formState.formData,
+        const newFormData = {
+            ...formData,
             address1: addressInfo.address || '',
             city: addressInfo.city || '',
             state: addressInfo.state || '',
             zipcode: addressInfo.zip || '',
             country: addressInfo.country || '',
-        }
-        dispatch(
-            formUpdated(newFormState)
-        );
+        };
+        dispatch(formUpdated({ ...formState, formData: newFormData }));
     };
 
     const handleContactUpdate = (contactMethodType: 'phone' | 'email', value: string) => {
         const updatedContactMethod = {
             active: true,
             type: contactMethodType,
-            value: value
+            value: value,
         };
         const existingContacts = [
-            ...formState.formData.contacts.filter((contactMethod) => contactMethod.type !== contactMethodType),
-            updatedContactMethod
+            ...formData.contacts.filter((contactMethod) => contactMethod.type !== contactMethodType),
+            updatedContactMethod,
         ];
 
-        const newFormState = {
-            ...formState,
-            formData: {
-                ...formState.formData,
-                contacts: existingContacts,
-            },
+        const newFormData = {
+            ...formData,
+            contacts: existingContacts,
         };
-        dispatch(
-            formUpdated(newFormState)
-        );
+        dispatch(formUpdated({ ...formState, formData: newFormData }));
     };
 
     return (
@@ -129,7 +117,7 @@ function ReferralForm({
                     </Box>
                     <Box flex={1} textAlign="left">
                         <Typography variant="h5" sx={{ paddingLeft: '10px' }}>
-                            {formData.firstname || formData.lastname ? `${formData.firstname} ${formData.lastname}` : `New Referral`}
+                            {firstname || lastname ? `${firstname} ${lastname}` : `New Referral`}
                         </Typography>
                     </Box>
                     <Box width={100}>
@@ -198,7 +186,7 @@ function ReferralForm({
                                     required
                                     Icon={Phone}
                                     onChange={(e) => handleContactUpdate('phone', e.target.value)}
-                                    value={phone?.value}
+                                    value={phone?.value || ''}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -207,7 +195,7 @@ function ReferralForm({
                                     required
                                     Icon={Email}
                                     onChange={(e) => handleContactUpdate('email', e.target.value)}
-                                    value={email?.value}
+                                    value={email?.value || ''}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -228,8 +216,8 @@ function ReferralForm({
                     </Grid>
                 </Grid>
             </Collapse>
-        </form >
+        </form>
     );
-}
+};
 
 export default ReferralForm;

@@ -1,44 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface referralFormData {
+export interface ReferralFormData {
     firstname: string;
     lastname: string;
     dateOfBirth: string;
-    // dateOfBirth: {
-    //     year: number
-    //     month: number,
-    //     day: number,
-    // };
     address1: string;
     city: string;
     state: string;
     zipcode: number | string;
     country: string;
     contacts: {
-        active: boolean,
-        type: 'phone' | 'email'
-        value: string
-    }[],
+        active: boolean;
+        type: 'phone' | 'email';
+        value: string;
+    }[];
     language: string;
     phone: string;
     email: string;
     notes: string;
 }
-export interface formState {
+
+export interface FormState {
     key: number;
     expanded: boolean;
-    formData: referralFormData;
-
+    formData: ReferralFormData;
 }
-const initialFormData: referralFormData = {
+
+const initialFormData: ReferralFormData = {
     firstname: '',
     lastname: '',
     dateOfBirth: '',
-    // dateOfBirth: {
-    //     year: 0,
-    //     month: 0,
-    //     day: 0,
-    // },
     address1: '',
     city: '',
     state: '',
@@ -47,74 +38,85 @@ const initialFormData: referralFormData = {
     language: '',
     phone: '',
     email: '',
-    contacts: [{
-        active: true,
-        type: 'phone',
-        value: ''
-    },
-    {
-        active: true,
-        type: 'email',
-        value: ''
-    }],
+    contacts: [
+        {
+            active: true,
+            type: 'phone',
+            value: '',
+        },
+        {
+            active: true,
+            type: 'email',
+            value: '',
+        },
+    ],
     notes: '',
-}
-const initialState: formState[] = [
+};
+
+const initialState: FormState[] = [
     {
         key: 1,
         expanded: true,
-        formData: initialFormData
-    }
-]
+        formData: initialFormData,
+    },
+];
 
 const referralFormsSlice = createSlice({
     name: 'referralForm',
     initialState,
     reducers: {
-        formAdded(state, action) {
+        formAdded: (state, action: PayloadAction<Partial<FormState>>) => {
             const largestKey = state.reduce((acc, form) => {
-                if (form.key > acc)
-                    acc = form.key;
+                if (form.key > acc) acc = form.key;
                 return acc;
-            }, 0);//alternatively, we could recreate all of the keys every time a new object is added.
+            }, 0);
 
-            const newForm = {
+            const newForm: FormState = {
                 key: largestKey + 1,
+                expanded: false, // Set it to false by default
                 formData: initialFormData,
-                ...action.payload
-            }
+                ...action.payload,
+            };
             state.push(newForm);
         },
-        formRemoved(state, action) {
+        formRemoved: (state, action: PayloadAction<{ key: number }>) => {
             const index = state.findIndex((form) => form.key === action.payload.key);
             if (index !== -1) {
                 state.splice(index, 1);
             }
         },
-        formUpdated(state, action) {
+        formUpdated: (state, action: PayloadAction<FormState>) => {
             const index = state.findIndex((form) => form.key === action.payload.key);
-            state[index] = action.payload;
+            if (index !== -1) {
+                state[index] = action.payload;
+            }
         },
-        formToggleExpand(state, action) {
-
+        formToggleExpand: (state, action: PayloadAction<{ key: number }>) => {
             state.map((form) => {
-                if (form.key == action.payload.key)
+                if (form.key === action.payload.key) {
                     form.expanded = !form.expanded;
+                }
                 return form;
             });
         },
-        formCollapseAll(state) {
+        formCollapseAll: (state) => {
             state.map((form) => {
                 form.expanded = false;
                 return form;
             });
         },
-        formExpandLast(state) {
+        formExpandLast: (state) => {
             state[state.length - 1].expanded = true;
-        }
+        },
     },
 });
 
-
-export const { formAdded, formRemoved, formUpdated, formCollapseAll, formExpandLast, formToggleExpand } = referralFormsSlice.actions;
+export const {
+    formAdded,
+    formRemoved,
+    formUpdated,
+    formCollapseAll,
+    formExpandLast,
+    formToggleExpand,
+} = referralFormsSlice.actions;
 export default referralFormsSlice.reducer;

@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
-import { ReactNode } from "react";
+import React from 'react';
+import { Box } from '@mui/material';
+import { ReactNode } from 'react';
 
 const alertStyles = {
     borderRadius: '0',
@@ -16,27 +17,29 @@ const alertColors = {
     error: { backgroundColor: 'red', color: '#fff' },
 };
 
+type AlertType = 'hidden' | 'success' | 'error';
+
 interface WcAlertProps {
     children: ReactNode;
-    type: 'hidden' | 'success' | 'error' | string;
+    type: AlertType;
 }
 
-const WcAlert = ({ children, type }: WcAlertProps) => {
-    if (type !== 'hidden') {
-        const alertColor = alertColors[type as 'success' | 'error'];
-        return (
-            <Box
-                sx={{
-                    ...alertColor,
-                    ...alertStyles,
-                }}
-            >
-                {children}
-            </Box>
-        );
+const WcAlert: React.FC<WcAlertProps> = ({ children, type }) => {
+    if (type === 'hidden') {
+        return null;
     }
 
-    return null;
+    const alertColor = alertColors[type];
+    return (
+        <Box
+            sx={{
+                ...alertColor,
+                ...alertStyles,
+            }}
+        >
+            {children}
+        </Box>
+    );
 };
 
 export default WcAlert;

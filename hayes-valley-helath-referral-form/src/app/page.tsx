@@ -1,6 +1,6 @@
 'use client'
 
-import ReferralPage from '../pages/referral-page/referral-page';
+import ReferralPage from './pages/referral-page/referral-page';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import "@fontsource/montserrat/500.css";

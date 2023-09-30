@@ -17,7 +17,7 @@ import {
     Language,
     Phone,
 } from '@mui/icons-material';
-import WcTextField from '../../app/custom-components/wc-text-field';
+import WcTextField from '../../custom-components/wc-text-field';
 import WcAddressInput from '@/app/custom-components/wc-address-input';
 
 interface ReferralFormProps {

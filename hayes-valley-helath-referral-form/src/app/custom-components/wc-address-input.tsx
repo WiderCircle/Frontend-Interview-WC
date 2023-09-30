@@ -5,7 +5,10 @@ import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { config } from '../config';
 
-interface PlacesAutocompleteComponentProps { }
+interface WcAddressInputProps {
+    setAddress: (newValue: string) => void;
+    address: string;
+}
 
 const styles = {
     container: {
@@ -27,9 +30,7 @@ const styles = {
     },
 };
 
-const PlacesAutocompleteComponent: React.FC<PlacesAutocompleteComponentProps> = () => {
-    const [address, setAddress] = useState<string>('');
-
+const WcAddressInput: React.FC<WcAddressInputProps> = ({ setAddress, address }) => {
     const handleChange = (newAddress: string) => {
         setAddress(newAddress);
     };
@@ -56,10 +57,11 @@ const PlacesAutocompleteComponent: React.FC<PlacesAutocompleteComponentProps> = 
                     <div>
                         <WcTextField
                             {...getInputProps({
-                                placeholder: 'Address',
                                 className: 'location-search-input',
                                 autoComplete: 'new-password',
                             })}
+                            placeholder="Address"
+                            fullWidth
                         />
                         <Box sx={styles.container}>
                             {(loading || suggestions.length > 0) && (
@@ -67,7 +69,6 @@ const PlacesAutocompleteComponent: React.FC<PlacesAutocompleteComponentProps> = 
                                     {loading && <ListItem>Loading...</ListItem>}
                                     {suggestions.map((suggestion, index) => {
                                         const className = suggestion.active ? 'suggestion-item active' : 'suggestion-item';
-
                                         return (
                                             <ListItemButton
                                                 sx={styles.listItem}
@@ -91,4 +92,4 @@ const PlacesAutocompleteComponent: React.FC<PlacesAutocompleteComponentProps> = 
     );
 };
 
-export default PlacesAutocompleteComponent;
+export default WcAddressInput;

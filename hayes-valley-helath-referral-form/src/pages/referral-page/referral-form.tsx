@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Collapse,
@@ -50,6 +50,15 @@ function ReferralForm({
     onExpandClick,
     onDeleteClick,
 }: ReferralFormProps) {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [contactLanguage, setContactLanguage] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [notes, setNotes] = useState('');
+
     return (
         <form style={{ backgroundColor: '#fff', marginTop: '10px' }}>
             <header>
@@ -101,6 +110,8 @@ function ReferralForm({
                                     placeholder="First Name"
                                     required
                                     Icon={AccountCircle}
+                                    onChange={(event) => { setFirstName(event.target.value); }}
+                                    value={firstName}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -108,6 +119,8 @@ function ReferralForm({
                                     placeholder="Last Name"
                                     required
                                     Icon={AccountCircle}
+                                    onChange={(event) => { setLastName(event.target.value); }}
+                                    value={lastName}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -115,6 +128,8 @@ function ReferralForm({
                                     placeholder="Date of Birth"
                                     required
                                     Icon={Cake}
+                                    onChange={(event) => { setDateOfBirth(event.target.value); }}
+                                    value={dateOfBirth}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -122,16 +137,33 @@ function ReferralForm({
                                     placeholder="Contact Language"
                                     required
                                     Icon={Language}
+                                    onChange={(event) => { setContactLanguage(event.target.value); }}
+                                    value={contactLanguage}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcTextField placeholder="Phone" required Icon={Phone} />
+                                <WcTextField
+                                    placeholder="Phone"
+                                    required
+                                    Icon={Phone}
+                                    onChange={(event) => { setPhone(event.target.value); }}
+                                    value={phone}
+                                />
                             </Grid>
                             <Grid item xs={6}>
-                                <WcTextField placeholder="Email" required Icon={Email} />
+                                <WcTextField
+                                    placeholder="Email"
+                                    required
+                                    Icon={Email}
+                                    onChange={(event) => { setEmail(event.target.value); }}
+                                    value={email}
+                                />
                             </Grid>
                             <Grid item xs={12}>
-                                <WcAddressInput />
+                                <WcAddressInput
+                                    address={address}
+                                    setAddress={setAddress}
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <WcTextField placeholder="Notes/Reason" />

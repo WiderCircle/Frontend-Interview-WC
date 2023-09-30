@@ -1,14 +1,14 @@
 
 
 import React from 'react';
-import { Box, TextField, InputAdornment, SvgIconProps, BaseTextFieldProps } from '@mui/material';
+import { Box, TextField, InputAdornment, SvgIconProps, BaseTextFieldProps, TextFieldProps, StandardTextFieldProps } from '@mui/material';
 
-interface CustomInputProps extends BaseTextFieldProps {
+interface CustomInputProps extends StandardTextFieldProps {
     Icon?: React.ComponentType<SvgIconProps>;
     placeholder: string;
 }
 
-const WcTextField: React.FC<CustomInputProps> = ({ Icon, required, placeholder, fullWidth, ...TextFieldProps }) => {
+const WcTextField: React.FC<CustomInputProps> = ({ Icon, required, placeholder, fullWidth = true, ...TextFieldProps }) => {
     const placeholderText = required ? `${placeholder}*` : placeholder;
 
     const textFieldStyles = {

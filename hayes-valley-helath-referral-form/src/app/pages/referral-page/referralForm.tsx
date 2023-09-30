@@ -22,6 +22,7 @@ import WcTextField from '../../custom-components/WcTextField';
 import WcAddressInput, { AddressInfo } from '@/app/custom-components/WcAddressInput';
 import { referralFormData, formState, formUpdated } from './referralFormsSlice';
 import { useDispatch } from 'react-redux';
+import { indicatorColors } from '@/app/page';
 
 interface ReferralFormProps {
     formState: formState;
@@ -116,7 +117,7 @@ function ReferralForm({
                             <Typography
                                 variant="h4"
                                 sx={{
-                                    backgroundColor: 'green',
+                                    backgroundColor: indicatorColors[displayIndex - 1],
                                     color: '#fff',
                                     paddingTop: '25px',
                                     paddingBottom: '25px',

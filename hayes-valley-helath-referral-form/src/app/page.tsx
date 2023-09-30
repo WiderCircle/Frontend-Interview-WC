@@ -65,6 +65,14 @@ const theme = createTheme({
   }
 });
 
+export const indicatorColors = [
+  '#25A575',
+  '#2595A5',
+  '#3A719B',
+  '#254B7A',
+  '#142B58'
+];
+
 export default function Home() {
   return (
     <Provider store={store}>

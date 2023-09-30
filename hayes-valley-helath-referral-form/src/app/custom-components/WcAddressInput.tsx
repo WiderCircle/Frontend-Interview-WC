@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
-import WcTextField from './wc-text-field';
+import WcTextField from './WcTextField';
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { config } from '../config';

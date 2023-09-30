@@ -18,8 +18,8 @@ import {
     Language,
     Phone,
 } from '@mui/icons-material';
-import WcTextField from '../../custom-components/wc-text-field';
-import WcAddressInput, { AddressInfo } from '@/app/custom-components/wc-address-input';
+import WcTextField from '../../custom-components/WcTextField';
+import WcAddressInput, { AddressInfo } from '@/app/custom-components/WcAddressInput';
 import { referralFormData, formState, formUpdated } from './referralFormsSlice';
 import { useDispatch } from 'react-redux';
 

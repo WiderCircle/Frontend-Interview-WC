@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Alert, Box, Container, Grid, Typography } from '@mui/material';
-import ReferralForm from './referral-form';
+import ReferralForm from './referralForm';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { formCollapseAll, formAdded, formRemoved, formExpandLast, formToggleExpand } from './referralFormsSlice';
 import useReferralApi from './useReferralApi';
-import WcAlert from '@/app/custom-components/wc-alert';
+import WcAlert from '@/app/custom-components/WcAlert';
 import { config } from '../../config';
 
 

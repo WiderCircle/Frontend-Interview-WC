@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
+import React from 'react';
+import PlacesAutocomplete, { geocodeByPlaceId } from 'react-places-autocomplete';
 import WcTextField from './WcTextField';
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import { Wrapper } from '@googlemaps/react-wrapper';
@@ -80,7 +80,7 @@ const WcAddressInput: React.FC<WcAddressInputProps> = ({ onAddressSelect, onChan
                                                 sx={styles.listItem}
                                                 {...getSuggestionItemProps(suggestion, {
                                                     className,
-                                                    tabIndex: 0, // Add tabindex to enable focus
+                                                    tabIndex: 0,
                                                 })}
                                                 key={index}
                                             >

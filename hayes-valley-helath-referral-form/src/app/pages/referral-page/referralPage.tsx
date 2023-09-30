@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, Box, Container, Grid, Typography } from '@mui/material';
+import React from 'react';
+import { Box, Card, Container, Grid, Typography } from '@mui/material';
 import ReferralForm from './referralForm';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,17 +68,19 @@ export default function ReferralPage() {
                     <Typography variant="subtitle1">You can add up to five patients at a time</Typography>
                 </header>
                 <main>
-                    {referralFormsState.map((formState, index) => (
-                        <div key={formState.key}>
-                            <ReferralForm
-                                formState={formState}
-                                displayIndex={index + 1}
-                                showUtilityButtons={referralFormsState.length > 1}
-                                onExpandClick={() => handleFormExpandClick(formState.key)}
-                                onDeleteClick={() => handleFormDeleteClick(formState.key)}
-                            />
-                        </div>
-                    ))}
+                    <Card>
+                        {referralFormsState.map((formState, index) => (
+                            <div key={formState.key}>
+                                <ReferralForm
+                                    formState={formState}
+                                    displayIndex={index + 1}
+                                    showUtilityButtons={referralFormsState.length > 1}
+                                    onExpandClick={() => handleFormExpandClick(formState.key)}
+                                    onDeleteClick={() => handleFormDeleteClick(formState.key)}
+                                />
+                            </div>
+                        ))}
+                    </Card>
                 </main>
                 <footer>
                     <Box mb={4} mt={1} textAlign={'center'}>
@@ -89,6 +91,7 @@ export default function ReferralPage() {
                     <Button disabled={loading || false} variant="contained" onClick={handleFormSubmission} style={{ display: 'block', width: '100%' }}>
                         Send Referrals
                     </Button>
+                    <Box pb={'50px'}></Box>
                 </footer>
             </Container>
         </main>

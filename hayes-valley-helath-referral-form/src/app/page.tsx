@@ -4,7 +4,6 @@ import ReferralPage from './pages/referral-page/referralPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import "@fontsource/montserrat/500.css";
-import { red } from '@mui/material/colors';
 import { Provider } from 'react-redux';
 import store from './store';
 

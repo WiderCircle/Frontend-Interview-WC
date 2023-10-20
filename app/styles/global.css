@@ -1,0 +1,40 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  background: #CDE7ED;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+h1, h2 {
+  color: #0B2B5B;
+  font-weight: 500;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+p {
+  color: #0B2B5B;
+}
+
+button, 
+input,
+textarea {
+  font-family: inherit;
+}
+
+::placeholder {
+  color: #0B2B5B;
+}
+
+* {
+  box-sizing: border-box;
+}

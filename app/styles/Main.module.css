@@ -1,0 +1,38 @@
+.container {
+  background: #CDE7ED;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100vw;
+}
+
+.header {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 196px;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 30px;
+}
+
+.header h2 {
+  font-size: 26px;
+}
+
+.form h1 {
+  font-size: 24px;
+  margin-top: 32px;
+  text-align: center;
+}
+
+.form h2 {
+  font-size: 20px;
+  margin-bottom: 32px;
+  text-align: center;
+}

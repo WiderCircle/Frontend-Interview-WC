@@ -9,7 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormInput: React.FC<Props> = ({ name, width, ...props }) => {
-  const { handleChange, handleBlur, errors, values } = useFormikContext();
+  const { handleChange, handleBlur, errors, values, touched } = useFormikContext();
   return (
     <div
       className={classnames(
@@ -24,7 +24,7 @@ const FormInput: React.FC<Props> = ({ name, width, ...props }) => {
         value={values[name]}
         {...props}
       />
-      {errors[name] && <p className={styles.formErrors}>{errors[name]}</p>}
+      {touched[name] && errors[name] && <p className={styles.formErrors}>{errors[name]}</p>}
     </div>
   );
 };

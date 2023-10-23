@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const FormDateInput: React.FC<Props> = ({ name, ...props }) => {
-  const { errors } = useFormikContext();
+  const { errors, touched } = useFormikContext();
   const [field, _, { setValue }] = useField(name);
   return (
     <div className={styles.formInput}>
@@ -20,7 +20,7 @@ export const FormDateInput: React.FC<Props> = ({ name, ...props }) => {
         selected={(field.value && new Date(field.value)) || null}
         onChange={(val) => setValue(val)}
       />
-      {errors[name] && <p className={styles.formErrors}>{errors[name]}</p>}
+      {touched[name] && errors[name] && <p className={styles.formErrors}>{errors[name]}</p>}
     </div>
   );
 };

@@ -21,6 +21,8 @@ h1, h2 {
   margin-block-end: 0;
 }
 
+input,
+label,
 p {
   color: #0B2B5B;
 }
@@ -31,8 +33,14 @@ textarea {
   font-family: inherit;
 }
 
+input {
+  border: none;
+  border-bottom: 1.1px #3A719B solid;
+  width: 100%;
+}
+
 ::placeholder {
-  color: #0B2B5B;
+  color: #3A719B;
 }
 
 * {

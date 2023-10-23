@@ -114,8 +114,30 @@
   color: #0B2B5B;
 }
 
+.textButton:disabled {
+  color: gray;
+  cursor: not-allowed;
+}
+
 .submitButton {
   border-radius: 25px;
   background: #0B2B5B;
   color: white;
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  border-radius: 25px;
+  background: gray;
+  color: lightgray;
+  cursor: not-allowed;
+}
+
+.submitStatus {
+  background: #25A575;
+  border-radius: 0 0 25px 25px;
+  color: white;
+  padding: 16px;
+  font-weight: 400;
+  font-size: 16px;
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useFormik, Formik } from 'formik';
+import classnames from 'classnames'
+import { Formik } from 'formik';
 import type { NextPage } from 'next';
 import * as yup from 'yup';
 import FormInput from '../components/FormInput';
@@ -81,28 +82,35 @@ const Main: NextPage = () => {
             - create reusable form component (for up to 5 patients) */}
                 <form onSubmit={formik.handleSubmit}>
                   <div className={styles.formInputs}>
-                    <FormInput type="text" name="firstName" placeholder="First Name"/>
-                    <FormInput type="text" name="lastName" placeholder="Last Name"/>
-                    <FormDateInput name="dateOfBirth" placeholderText="Date of Birth"/>
-                    <FormInput type="text" name="contactLanguage" placeholder="Contact Language"/>
+                    <FormInput type="text" name="firstName" placeholder="First Name" />
+                    <FormInput type="text" name="lastName" placeholder="Last Name" />
+                    <FormDateInput name="dateOfBirth" placeholderText="Date of Birth" />
+                    <FormInput type="text" name="contactLanguage" placeholder="Contact Language" />
                     <FormInput type="phone" name="phone" placeholder="Phone" />
-                    <FormInput type="email" name="email" placeholder="Email"/>
-                    <FormInput type="address" name="address" placeholder="Address" width="100%"/>
-                    <FormInput type="text" name="notes" placeholder="Notes" width="100%"/>
+                    <FormInput type="email" name="email" placeholder="Email" />
+                    <FormInput type="address" name="address" placeholder="Address" width="100%" />
+                    <FormInput type="text" name="notes" placeholder="Notes" width="100%" />
                   </div>
                   {/* todo: 
                   - make "+ add another patient" button that duplicates form
                   - make form component collapsible when there are multiple patients */}
                 </form>
               </div>
+              {/* todo: handle form submit & show success message */}
+              <button
+                className={classnames(styles.button, styles.textButton)}
+                onClick={() => { }}
+              >
+                + Add Another Patient
+              </button>
+              <button
+                className={classnames(styles.button, styles.submitButton)}
+                type="submit"
+                onClick={formik.submitForm}
+              >
+                Send Referrals
+              </button>
             </div>
-            {/* todo: handle form submit & show success message */}
-            <button onClick={() => {}}>
-              + Add Another Patient
-            </button>
-            <button type="submit" onClick={formik.submitForm}>
-              Send Referrals
-            </button>
           </div>
         );
       }}

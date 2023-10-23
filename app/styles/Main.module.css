@@ -25,6 +25,13 @@
   font-size: 26px;
 }
 
+.formPage {
+  width: 782px;
+  @media only screen and (max-width: 800px) {
+    width: 95vw;
+  }
+}
+
 .formPage h1 {
   font-size: 24px;
   margin-top: 32px;
@@ -40,18 +47,16 @@
 .form {
   background-color: white;
   border-radius: 3px;
-  width: 782px;
 }
 
-.form button {
-  
+.form form {
+  padding: 24px 54px;
 }
 
 .formHeader {
   align-items: center;
   display: flex;
   font-weight: 500;
-  margin-bottom: 32px;
 }
 
 .formHeader p {
@@ -60,7 +65,7 @@
   color: white;
   font-size: 26px;
   margin: 0 16px 0 0;
-  padding: 0 16px;
+  padding: 16px;
 }
 
 .formHeader h1 {
@@ -73,7 +78,10 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 32px;
   grid-row-gap: 32px;
-  margin: 0 54px;
+
+  @media only screen and (max-width: 575px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .form .fullWidthInput {
@@ -90,4 +98,24 @@
   color: #F37021;
   font-size: 10px;
   margin: 2px;
+}
+
+.button {
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.textButton {
+  background: none;
+  color: #0B2B5B;
+}
+
+.submitButton {
+  border-radius: 25px;
+  background: #0B2B5B;
+  color: white;
 }

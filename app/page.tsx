@@ -2,12 +2,30 @@
 import ReferralCard from "@/components/features/ReferralForm/ReferralCard";
 import TextInput from "@/components/shared/ControlledTextInput";
 import Form from "@/components/shared/Form";
+import { FormSchemaTypes } from "@/types/Form.types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Container, Grid } from "@mui/material";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+
+const validationSchema = z.object({
+  firstName: FormSchemaTypes.Field(),
+  lastName: FormSchemaTypes.Field(),
+  dateOfBirth: FormSchemaTypes.Field(),
+  contactLanguage: FormSchemaTypes.Field(),
+  phone: FormSchemaTypes.Field(),
+  email: FormSchemaTypes.Field(),
+  address: FormSchemaTypes.Field(),
+  notes: FormSchemaTypes.Optional,
+});
+
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function Home() {
-  const methods = useForm();
+  const methods = useForm<ValidationSchema>({
+    resolver: zodResolver(validationSchema),
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

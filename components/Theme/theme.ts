@@ -26,6 +26,13 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiGrid: {
+      styleOverrides: {
+        item: {
+          paddingTop: "0 !important",
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({

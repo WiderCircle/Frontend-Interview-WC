@@ -44,7 +44,7 @@ const ReferralCard = ({ children, header, cardIndex }: ReferralCardProps) => {
         onClick={() => setExpand(!expand)}
       />
       <Collapse in={expand}>
-        <CardContent>{children}</CardContent>
+        <CardContent sx={{ marginTop: "32px" }}>{children}</CardContent>
       </Collapse>
     </Card>
   );

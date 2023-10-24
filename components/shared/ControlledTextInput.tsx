@@ -14,13 +14,18 @@ const TextInput = ({ name, label }: TextInputProps) => {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, onBlur, value, ref } }) => (
+      render={({
+        field: { onChange, onBlur, value, ref },
+        fieldState: { error },
+      }) => (
         <TextField
           onChange={onChange} // send value to hook form
           onBlur={onBlur} // notify when input is touched/blur
           label={label}
           fullWidth
           variant="standard"
+          error={!!error}
+          helperText={error?.message || " "}
         />
       )}
     />

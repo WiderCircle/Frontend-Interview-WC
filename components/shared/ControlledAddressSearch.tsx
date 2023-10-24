@@ -4,14 +4,18 @@ import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import React, { ReactElement, cloneElement } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import AddressSearch from "./AddressSearch";
 
-interface TextInputProps {
+interface ControlledAddressSearchProps {
   name: string;
   label: string;
   startAdornmentIcon?: ReactElement;
 }
 
-const TextInput = ({ name, label, startAdornmentIcon }: TextInputProps) => {
+const ControlledAddressSearch = ({
+  name,
+  label,
+}: ControlledAddressSearchProps) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -21,31 +25,16 @@ const TextInput = ({ name, label, startAdornmentIcon }: TextInputProps) => {
         field: { onChange, onBlur, value, ref },
         fieldState: { error },
       }) => (
-        <TextField
-          // defaultValue={value}
+        <AddressSearch
           value={value}
-          onChange={onChange} // send value to hook form
-          onBlur={onBlur} // notify when input is touched/blur
+          onChange={onChange}
           label={label}
-          fullWidth
-          variant="standard"
           error={!!error}
           helperText={error?.message || " "}
-          InputProps={{
-            ...(startAdornmentIcon
-              ? {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {cloneElement(startAdornmentIcon)}
-                    </InputAdornment>
-                  ),
-                }
-              : {}),
-          }}
         />
       )}
     />
   );
 };
 
-export default TextInput;
+export default ControlledAddressSearch;

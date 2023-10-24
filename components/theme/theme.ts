@@ -29,7 +29,7 @@ const theme = createTheme({
     MuiGrid: {
       styleOverrides: {
         item: {
-          paddingTop: "0 !important",
+          paddingTop: "12px !important",
         },
       },
     },

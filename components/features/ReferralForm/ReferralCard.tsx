@@ -2,8 +2,8 @@ import { Box, Card, CardContent, CardHeader, IconButton } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import { ArrowDropDown, Delete } from "@material-ui/icons";
 
-import React, { ReactNode, useState } from "react";
-import { UseFieldArrayRemove } from "react-hook-form";
+import React, { ReactNode, useMemo, useState } from "react";
+import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 
 interface ReferralCardProps {
   children: ReactNode;
@@ -27,6 +27,7 @@ const ReferralCard = ({
   remove,
 }: ReferralCardProps) => {
   const [expand, setExpand] = useState(true);
+
   return (
     <Card
       sx={{ padding: "12px 40px", position: "relative", marginTop: "32px" }}

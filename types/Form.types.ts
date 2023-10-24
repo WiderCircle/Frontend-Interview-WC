@@ -18,16 +18,10 @@ export const FormSchemaTypes = {
 
     return baseValidator;
   },
-  //   DatePicker: () =>
-  //     z.preprocess((arg) => {
-  //       if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
-  //     }, z.date()),
-  //   SearchableSelect: (message = "") =>
-  //     z.preprocess((arg) => {
-  //       if (typeof arg === "string") return arg;
-  //       const argSelection = arg as SelectOption;
-  //       return argSelection.value;
-  //     }, z.string().min(1, { message })),
+  AddressSearch: (message = "") =>
+    z.preprocess((arg: any) => {
+      return arg?.description || "";
+    }, z.string().min(1, { message })),
 
   Optional: z.any(),
 };

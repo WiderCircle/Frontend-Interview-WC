@@ -1,12 +1,15 @@
-import { Box, Card, CardContent, CardHeader } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, IconButton } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
+import { ArrowDropDown, Delete } from "@material-ui/icons";
 
 import React, { ReactNode, useState } from "react";
+import { UseFieldArrayRemove } from "react-hook-form";
 
 interface ReferralCardProps {
   children: ReactNode;
   header: string;
   cardIndex: number;
+  remove: UseFieldArrayRemove;
 }
 
 const CardColorByIndex = [
@@ -17,11 +20,16 @@ const CardColorByIndex = [
   "#142B58",
 ];
 
-const ReferralCard = ({ children, header, cardIndex }: ReferralCardProps) => {
+const ReferralCard = ({
+  children,
+  header,
+  cardIndex,
+  remove,
+}: ReferralCardProps) => {
   const [expand, setExpand] = useState(true);
   return (
     <Card
-      sx={{ padding: "16px 64px", position: "relative", marginTop: "32px" }}
+      sx={{ padding: "12px 40px", position: "relative", marginTop: "32px" }}
     >
       <Box
         sx={{
@@ -41,9 +49,33 @@ const ReferralCard = ({ children, header, cardIndex }: ReferralCardProps) => {
         {cardIndex + 1}
       </Box>
       <CardHeader
-        sx={{ padding: 0 }}
-        title={header}
-        onClick={() => setExpand(!expand)}
+        sx={{ padding: "0 12px" }}
+        title={
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {header}
+
+            <Box>
+              <IconButton onClick={() => remove(cardIndex)}>
+                <Delete />
+              </IconButton>
+              <IconButton
+                onClick={() => setExpand(!expand)}
+                sx={{
+                  marginLeft: "8px",
+                  transform: expand ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              >
+                <ArrowDropDown />
+              </IconButton>
+            </Box>
+          </Box>
+        }
       />
       <Collapse in={expand}>
         <CardContent sx={{ marginTop: "32px" }}>{children}</CardContent>

@@ -60,6 +60,7 @@ export default function Home() {
                 header={"New referral"}
                 cardIndex={index}
                 key={item.id}
+                remove={remove}
               >
                 <Grid
                   container
@@ -117,7 +118,7 @@ export default function Home() {
                 </Grid>
               </ReferralCard>
             ))}
-            {fields.length !== 4 && (
+            {fields.length !== 5 && (
               <Button
                 variant="text"
                 type="button"

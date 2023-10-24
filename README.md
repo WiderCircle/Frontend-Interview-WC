@@ -1,24 +1,27 @@
 # WiderCircle Front-End Engineering Interview
 
-## Interview Task
+# Assumptions
 
-Build the Patient Referral Form using this [design spec](https://www.figma.com/file/XIHFNbIXykq8KosWEIryhoRJ/Patient-Referral-Form-interview?node-id=0%3A1).
+- I took a quick look at the data schema and didn't think too carefully about it. The designs provided in Figma _mostly_ look like all the fields are regular textfields. For that reason the Date field does not actually have a datepicker.
 
-There is no need to build any backend (API layer, server, database). For individual form, created you should store those in some state management library instead of a React State i.e., Redux, Recoil, Rematch. For the inputs of each individual store you can store that in a react state. You can simulate the address input or ignore it. For simulating form submission, you can do a POST to /api/referrals.
+  - The fast solution here would be to maybe use Cleave.js but I am tired.
+
+- I chose to use React-hook-form for internal state management & zod for error handling. This is nice because it's provided FieldArray allows me to validate data across multiple subforms before submitting.
+
+  - One thing I discovered, which I can solve with more time, is that the cards show the name rather than "New patient". I'm assuming this occurs once the subform is submitted. AFAIK, react-hook-form doesn't operate on submitting subforms, it just passively collects state. A solution can probably be thrown together with watchedFields or getValues().
+
+- the address input is provided by mui autocomplete, I was able to get it work with some tweaking & wrap it into a Controller for use in react-hook-form.
+
+- I have a few other react-hook-form tools that I have built out that I use day-to-day, so I haven't had to write JSX that looks like this in a while. The file organization might be thrown off a little bit because I was rushed and sort of unfamiliar with how to structure them. But it might be ok.
 
 ## Duration
 
-Up to 8 hours. But you do not have to use the entire timespan
+~ 6 hours with some distractions. Overall I think I did fine.
 
-## Submission
+## What else can be improved
 
-1.  Fork this repo
-2.  Build Patient Referral Form. Suggested libraries
-    - Next.js - [https://nextjs.org/](https://nextjs.org/)
-    - React - [https://react.dev/](https://react.dev/)
-    - Material UI components - [https://material-ui.com/](https://material-ui.com/)
-    - Address lookup - [https://www.npmjs.com/package/react-places-autocomplete](https://www.npmjs.com/package/react-places-autocomplete)
-3.  Submit a Pull Request (PR)
-4.  In the PR, include a README that includes the following:
-    - If you made any assumptions, what are they
-    - Outline what else needs to be done if given more time
+1.  If I had more time I'd improve on styles a bit more. Felt that I got close and didn't want to dive super deep into perfecting the look & feel. Lots of things to build for this one.
+2.  A datepicker (mui datepicker), or cleave.js input which can be utilized.
+3.  The POST may want to check to see if the email is in use, and respond with a server error which can be displayed on the client.
+4.  Everything becomes easier with a component library so eventually one of those.
+5.  The server doesn't respond with an error so I did not handle that. But I suppose the onSubmit could handle showing a red alert or display server errors on the form itself.

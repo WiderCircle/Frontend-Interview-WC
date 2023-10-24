@@ -1,7 +1,8 @@
+"use client";
 import { Montserrat } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
-const montserrat = Montserrat({
+export const montserrat = Montserrat({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -13,6 +14,16 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: montserrat.style.fontFamily,
+    h1: {
+      fontWeight: 500,
+      fontSize: "30px",
+      lineHeight: "40px",
+    },
+    h2: {
+      fontWeight: 500,
+      fontSize: "26px",
+      lineHeight: "40px",
+    },
   },
   components: {
     MuiAlert: {

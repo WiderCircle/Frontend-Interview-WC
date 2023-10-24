@@ -20,7 +20,9 @@ const CardColorByIndex = [
 const ReferralCard = ({ children, header, cardIndex }: ReferralCardProps) => {
   const [expand, setExpand] = useState(true);
   return (
-    <Card sx={{ padding: "16px 64px", position: "relative" }}>
+    <Card
+      sx={{ padding: "16px 64px", position: "relative", marginTop: "32px" }}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -36,7 +38,7 @@ const ReferralCard = ({ children, header, cardIndex }: ReferralCardProps) => {
           color: "white",
         }}
       >
-        1
+        {cardIndex + 1}
       </Box>
       <CardHeader
         sx={{ padding: 0 }}

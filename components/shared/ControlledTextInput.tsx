@@ -19,6 +19,8 @@ const TextInput = ({ name, label }: TextInputProps) => {
         fieldState: { error },
       }) => (
         <TextField
+          // defaultValue={value}
+          value={value}
           onChange={onChange} // send value to hook form
           onBlur={onBlur} // notify when input is touched/blur
           label={label}
